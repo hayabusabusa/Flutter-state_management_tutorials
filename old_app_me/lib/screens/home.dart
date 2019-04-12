@@ -111,8 +111,10 @@ class Notice extends StatelessWidget {
       child: Row(
         children: <Widget>[
           // テキストとボタン
-          SizedBox(
-            width: MediaQuery.of(context).size.width / 4.0,
+          // Expanded: 
+          // 比率を指定して一杯一杯に表示できる
+          Expanded(
+            flex: 1,
             child: Column(
               children: <Widget>[
                 Text('お知らせ', style: TextStyle(color: Theme.of(context).primaryColorDark)),
@@ -127,12 +129,19 @@ class Notice extends StatelessWidget {
           ),
           SizedBox(width: 8.0), // Space
           // お知らせの内容表示
-          Container(
-            padding: const EdgeInsets.all(8.0),
-            height: 64.0,
-            color: Colors.grey[350],
-            width: MediaQuery.of(context).size.width / 1.6,
-            child: Text('今日は可燃ゴミの収集日です。'),
+          Expanded(
+            flex: 2,
+            child: Container(
+              padding: const EdgeInsets.all(8.0),
+              height: 64.0,
+              color: Colors.grey[350],
+              width: MediaQuery.of(context).size.width / 1.6,
+              child: Text(
+                '今日は可燃ゴミの収集日ですよまさか不燃物を捨てる人はいませんよね？不燃物を捨ててしまった人にはペナルティがあります。',
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis
+              ),
+            ),
           )
         ],
       ),
