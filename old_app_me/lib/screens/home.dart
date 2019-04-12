@@ -35,7 +35,7 @@ class Header extends StatelessWidget {
           Image.asset(
             'images/home.jpg',
             width: 800,
-            height: MediaQuery.of(context).size.height / 3.5,
+            height: MediaQuery.of(context).size.height / 3.0,
             fit: BoxFit.fill,
           ),
           Container(
