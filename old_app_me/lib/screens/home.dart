@@ -35,7 +35,7 @@ class Header extends StatelessWidget {
           Image.asset(
             'images/home.jpg',
             width: 800,
-            height: 240,
+            height: MediaQuery.of(context).size.height / 3.5,
             fit: BoxFit.fill,
           ),
           Container(
@@ -60,45 +60,53 @@ class Daily extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 16.0),
+      margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           // 左の yyyy/mm/dd () のテキストの部分
-          Container(
-            child: Row(
-              children: <Widget>[
-                Text('2018 ', textAlign: TextAlign.start),
-                Text('12/30', style: TextStyle(fontSize: 30.0)),
-                Text(' (水)')
-              ],
-            ),
-          ),
-          // Separator
-          VerticalDivider(color: Colors.blue[400]),
-          // 右の 天気関連の部分
-          Container(
-            child: Row(
-              children: <Widget>[
-                // 上下に並んだ二つのテキスト
-                Column(
+          Expanded(
+            child: Card(
+              child: Container(
+                padding: const EdgeInsets.symmetric(vertical: 21.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Text('今日の天気'),
-                    Text('晴れ時々曇り')
+                    Text('2018 '),
+                    Text('12/30', style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold)),
+                    Text(' (水)')
                   ],
                 ),
-                Container(width: 8.0), // Space
-                // 天気のアイコン
-                CircleAvatar(
-                  backgroundColor: Colors.grey,
-                  radius: 25.0,
-                )
-              ],
+              ),
             ),
-          )
-        ],
-      ),
-    );
+          ),
+          // 右の 天気関連の部分
+          Expanded(
+            child: Card(
+              child: Container(
+                padding: const EdgeInsets.symmetric(vertical: 13.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    // 上下に並んだ二つのテキスト
+                    Column(
+                      children: <Widget>[
+                        Text('今日の天気', style: TextStyle(fontSize: 12.0)),
+                        Text('晴れ時々曇り', style: TextStyle(fontSize: 13.0, fontWeight: FontWeight.bold))
+                      ],
+                    ),
+                    // 天気のアイコン
+                    CircleAvatar(
+                      backgroundColor: Colors.grey,
+                      radius: 20.0,
+                    )
+                  ],
+                ),
+              ),
+          ),
+          ),
+      ],
+    ),
+      );
   }
 }
 
@@ -136,6 +144,8 @@ class Notice extends StatelessWidget {
               height: 64.0,
               color: Colors.grey[350],
               width: MediaQuery.of(context).size.width / 1.6,
+              // Text maxlines, overflow:
+              // Text の長さを 2 行に制限して、オーバーした時は ... にする
               child: Text(
                 '今日は可燃ゴミの収集日ですよまさか不燃物を捨てる人はいませんよね？不燃物を捨ててしまった人にはペナルティがあります。',
                 maxLines: 2,
@@ -160,37 +170,37 @@ class VicinityPanels extends StatelessWidget {
         children: <Widget>[
           // ボーダー付きのボタンが三つ
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               OutlineButton(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0),
                 borderSide: BorderSide(color: Theme.of(context).primaryColor, width: 2.0),
                 child: Column(
                   children: <Widget>[
                     Icon(Icons.location_on, color: Theme.of(context).primaryColorDark),
-                    Text('周辺情報')
+                    Text('周辺情報', style: TextStyle(fontSize: 12.0))
                   ],
                 ),
                 onPressed: () => {},
               ),
               OutlineButton(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0),
                 borderSide: BorderSide(color: Theme.of(context).primaryColor, width: 2.0),
                 child: Column(
                   children: <Widget>[
                     Icon(Icons.people, color: Theme.of(context).primaryColorDark),
-                    Text('くらしマナー')
+                    Text('くらしマナー', style: TextStyle(fontSize: 12.0))
                   ],
                 ),
                 onPressed: () => {},
               ),
               OutlineButton(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0),
                 borderSide: BorderSide(color: Theme.of(context).primaryColor, width: 2.0),
                 child: Column(
                   children: <Widget>[
                     Icon(Icons.monetization_on, color: Theme.of(context).primaryColorDark),
-                    Text('料金情報')
+                    Text('料金情報', style: TextStyle(fontSize: 12.0))
                   ],
                 ),
                 onPressed: () => {},
