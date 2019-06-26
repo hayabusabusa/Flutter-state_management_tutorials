@@ -16,7 +16,7 @@ class HomeListItem extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         // Space
-        SizedBox(height: _index == 0 ? 40.0 : 16.0,),
+        SizedBox(height: _index == 0 ? 40.0 : 20.0,),
 
         // Header
         Container(
@@ -34,10 +34,13 @@ class HomeListItem extends StatelessWidget {
           color: Colors.white,
           child: InkWell(
             onTap: () {
-              // TODO Navigation
+              // Navigation
               switch (_tutorial.type) {
                 case TutorialType.simple:
                   print('Did you tapped Simple ?');
+                  break;
+                case TutorialType.dotIndicator:
+                  print('Did you tapped Dot indicator ?');
                   break;
                 case TutorialType.advance:
                   print('Did you tapped Advance ?');

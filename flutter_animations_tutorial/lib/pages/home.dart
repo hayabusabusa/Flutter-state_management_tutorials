@@ -6,7 +6,8 @@ class Home extends StatelessWidget {
   // Tutorial
   final Tutorials _tutorials = Tutorials([
     Tutorial(title: 'Simple', description: 'SIMPLE ANIMATION\nLIKE SCALE ANIMATION', type: TutorialType.simple),
-    Tutorial(title: 'Dot indicator', description: 'DOT INDICATOR WITH ANIMATION', type: TutorialType.simple),
+    Tutorial(title: 'Dot indicator', description: 'DOT INDICATOR WITH ANIMATION', type: TutorialType.dotIndicator),
+    Tutorial(title: 'Advance', description: 'ADVANCED ANIMATION EXAMPLE', type: TutorialType.advance),
   ]);
 
   @override

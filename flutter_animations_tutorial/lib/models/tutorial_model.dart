@@ -1,6 +1,7 @@
-// Tutorial type
+// Tutorial enumeration type
 enum TutorialType {
     simple,
+    dotIndicator,
     advance,
 }
 
