@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animations_tutorial/models/tutorial_model.dart';
+import 'package:flutter_animations_tutorial/pages/animated.dart';
+import 'package:flutter_animations_tutorial/pages/basic.dart';
 
 class HomeListItem extends StatelessWidget {
   int _index;
@@ -36,6 +38,24 @@ class HomeListItem extends StatelessWidget {
             onTap: () {
               // Navigation
               switch (_tutorial.type) {
+                case TutorialType.basic:
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return Basic();
+                      }
+                    )
+                  );
+                  break;
+                case TutorialType.animatedWidget:
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return Animated();
+                      }
+                    ),
+                  );
+                  break;
                 case TutorialType.simple:
                   print('Did you tapped Simple ?');
                   break;

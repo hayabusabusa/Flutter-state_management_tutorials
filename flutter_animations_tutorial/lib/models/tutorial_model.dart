@@ -1,5 +1,7 @@
 // Tutorial enumeration type
 enum TutorialType {
+    basic,
+    animatedWidget,
     simple,
     dotIndicator,
     advance,
