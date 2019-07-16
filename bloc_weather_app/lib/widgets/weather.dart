@@ -1,9 +1,25 @@
+import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:bloc_weather_app/blocs/blocs.dart';
 import 'package:bloc_weather_app/widgets/widgets.dart';
 
-class Weather extends StatelessWidget {
+class Weather extends StatefulWidget {
+  @override
+  State<Weather> createState() => _WeatherState();
+}
+
+class _WeatherState extends State<Weather> {
+
+  // Completer を扱うためStatefulWidgetにする
+  Completer<void> _refreshCompleter;
+
+  @override
+  void initState() {
+    super.initState();
+    _refreshCompleter = Completer<void>();
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -52,24 +68,32 @@ class Weather extends StatelessWidget {
             if (state is WeatherLoaded) {
               final weather = state.weather;
 
-              return ListView(
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.only(top: 100.0),
-                    child: Center(
-                      child: Location(location: weather.location,),
+              return RefreshIndicator(
+                onRefresh: () {
+                  weatherBloc.dispatch(
+                    RefreshWeather(city: state.weather.location)
+                  );
+                  return _refreshCompleter.future;
+                },
+                child: ListView(
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(top: 100.0),
+                      child: Center(
+                        child: Location(location: weather.location,),
+                      ),
                     ),
-                  ),
-                  Center(
-                    child: LastUpdated(dateTime: weather.lastUpdated,),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 50.0),
-                    child: Center(
-                      child: CombinedWeatherTemperature(weather: weather,),
+                    Center(
+                      child: LastUpdated(dateTime: weather.lastUpdated,),
                     ),
-                  ),
-                ],
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 50.0),
+                      child: Center(
+                        child: CombinedWeatherTemperature(weather: weather,),
+                      ),
+                    ),
+                  ],
+                ),
               );
             }
 
