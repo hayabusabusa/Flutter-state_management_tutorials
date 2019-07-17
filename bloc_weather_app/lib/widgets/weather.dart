@@ -57,12 +57,14 @@ class _WeatherState extends State<Weather> {
         // BlocProviderでThemeBlocを取り出してdispatchしている
 
         child: BlocListener(
-          bloc: weatherBloc,
+          bloc: weatherBloc, // どのBlocを購読するか
           listener: (BuildContext context, WeatherState state) {
             if (state is WeatherLoaded) {
               BlocProvider.of<ThemeBloc>(context).dispatch(
                 WeatherChanged(condition: state.weather.condition),
               );
+
+              // RefreshCotrollerを完了にする
               _refreshCompleter?.complete();
               _refreshCompleter = Completer();
             }
