@@ -50,61 +50,87 @@ class _WeatherState extends State<Weather> {
         ],
       ),
       body: Center(
-        child: BlocBuilder(
+
+        // MARK: - BlocListener
+        // 指定したBlocに変更があった場合はlistenerに通知される
+        // listener内ではStateがロード完了だった場合に
+        // BlocProviderでThemeBlocを取り出してdispatchしている
+
+        child: BlocListener(
           bloc: weatherBloc,
-          builder: (_, WeatherState state) {
-
-            // StateがWeatherEmptyの時
-            if (state is WeatherEmpty) {
-              return Center(child: Text('Please Select a Location'),);
-            }
-
-            // StateがWeatherLoadingの時
-            if (state is WeatherLoading) {
-              return Center(child: CircularProgressIndicator(),);
-            }
-
-            // StateがWeatherLoadedの時
+          listener: (BuildContext context, WeatherState state) {
             if (state is WeatherLoaded) {
-              final weather = state.weather;
-
-              return RefreshIndicator(
-                onRefresh: () {
-                  weatherBloc.dispatch(
-                    RefreshWeather(city: state.weather.location)
-                  );
-                  return _refreshCompleter.future;
-                },
-                child: ListView(
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(top: 100.0),
-                      child: Center(
-                        child: Location(location: weather.location,),
-                      ),
-                    ),
-                    Center(
-                      child: LastUpdated(dateTime: weather.lastUpdated,),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical: 50.0),
-                      child: Center(
-                        child: CombinedWeatherTemperature(weather: weather,),
-                      ),
-                    ),
-                  ],
-                ),
+              BlocProvider.of<ThemeBloc>(context).dispatch(
+                WeatherChanged(condition: state.weather.condition),
               );
-            }
-
-            // StateがWeatherErrorの時
-            if (state is WeatherError) {
-              return Text(
-                'Something went wrong!',
-                style: TextStyle(color: Colors.red),
-              );
+              _refreshCompleter?.complete();
+              _refreshCompleter = Completer();
             }
           },
+          child: BlocBuilder(
+            bloc: weatherBloc,
+            builder: (_, WeatherState state) {
+
+              // StateがWeatherEmptyの時
+              if (state is WeatherEmpty) {
+                return Center(child: Text('Please Select a Location'),);
+              }
+
+              // StateがWeatherLoadingの時
+              if (state is WeatherLoading) {
+                return Center(child: CircularProgressIndicator(),);
+              }
+
+              // StateがWeatherLoadedの時
+              if (state is WeatherLoaded) {
+                final weather = state.weather;
+
+                return BlocBuilder(
+                  bloc: BlocProvider.of<ThemeBloc>(context),
+                  builder: (_, ThemeState themeState) {
+                    return GradientContainer(
+                      color: themeState.color,
+                      child: RefreshIndicator(
+                        onRefresh: () {
+                          weatherBloc.dispatch(
+                            RefreshWeather(city: state.weather.location)
+                          );
+                          return _refreshCompleter.future;
+                        },
+                        child: ListView(
+                          children: <Widget>[
+                            Padding(
+                              padding: EdgeInsets.only(top: 100.0),
+                              child: Center(
+                                child: Location(location: weather.location,),
+                              ),
+                            ),
+                            Center(
+                              child: LastUpdated(dateTime: weather.lastUpdated,),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(vertical: 50.0),
+                              child: Center(
+                                child: CombinedWeatherTemperature(weather: weather,),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                );
+              }
+
+              // StateがWeatherErrorの時
+              if (state is WeatherError) {
+                return Text(
+                  'Something went wrong!',
+                  style: TextStyle(color: Colors.red),
+                );
+              }
+            },
+          ),
         ),
       ),
     );

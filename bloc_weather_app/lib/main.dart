@@ -17,7 +17,13 @@ void main() {
       ),
     );
 
-  runApp(WeatherApp(weatherRepository: weatherRepository,));
+  // App(最上層)にThemeBlocを適応
+  runApp(
+    BlocProvider<ThemeBloc>(
+      builder: (context) => ThemeBloc(),
+      child: WeatherApp(weatherRepository: weatherRepository,),
+    )
+  );
 }
 
 class WeatherApp extends StatelessWidget {
@@ -31,13 +37,22 @@ class WeatherApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Bloc Weahter',
-      home: BlocProvider(
-        builder: (context) => 
-          WeatherBloc(weatherRepository: weatherRepository),
-        child: Weather(),
-      ),
+    return BlocBuilder(
+      // BlocProvider.ofで取り出し
+      bloc: BlocProvider.of<ThemeBloc>(context),
+      builder: (_, ThemeState themeState) {
+        return MaterialApp(
+          title: 'Bloc Weahter',
+
+          // Stateから取り出したThemeDataを使用
+          theme: themeState.theme,
+          home: BlocProvider(
+            builder: (context) => 
+              WeatherBloc(weatherRepository: weatherRepository),
+            child: Weather(),
+          ),
+        );
+      },
     );
   }
 }
