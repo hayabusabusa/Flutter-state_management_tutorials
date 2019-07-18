@@ -1,0 +1,41 @@
+name: bloc_todo_app
+description: A new Flutter project.
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  meta: ">=1.1.0 <2.0.0"
+  equatable: ^0.2.0
+  flutter_bloc: ^0.19.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+# Flutterのアーキテクチャーサンプルと同じものを使うため
+# dependecyをオーバーライド
+# importで使えるようになる
+dependency_overrides:
+  todos_app_core:
+    git:
+      url: https://github.com/felangel/flutter_architecture_samples
+      path: todos_app_core
+      ref: expose-repositories
+  todos_repository_core:
+    git:
+      url: https://github.com/felangel/flutter_architecture_samples
+      path: todos_repository_core
+      ref: expose-repositories
+  todos_repository_simple:
+    git:
+      url: https://github.com/felangel/flutter_architecture_samples
+      path: todos_repository_simple
+      ref: expose-repositories
+
+flutter:
+  uses-material-design: true
