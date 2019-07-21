@@ -38,4 +38,13 @@ class Todo extends Equatable {
   TodoEntity toEntity() {
     return TodoEntity(task, id, note, complete);
   }
+
+  static Todo fromEntity(TodoEntity entity) {
+    return Todo(
+      entity.task,
+      complete: entity.complete ?? false,
+      note: entity.note,
+      id: entity.id ?? Uuid().generateV4(),
+    );
+  }
 }
