@@ -4,6 +4,7 @@ import 'package:bloc_todo_app/models/models.dart';
 
 // MARK: State
 
+@immutable
 abstract class TodosState extends Equatable {
   TodosState([List props = const []]) : super(props);
 }
