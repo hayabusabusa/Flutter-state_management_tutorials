@@ -13,6 +13,6 @@ class FlutterTodosKeys {
     const Key('__filteredTodosEmptyContainer__');
   static final statsLoadingIndicator = const Key('__statsLoadingIndicator__');
   static final emptyStatsContainer = const Key('__emptyStatsContainer__');
-  static final emptyDetailContainer = const Key('__emptyDetailsContainer__');
-  static final detailScreenCheckBox = const Key('__detailScreenCheckBox__');
+  static final emptyDetailsContainer = const Key('__emptyDetailsContainer__');
+  static final detailsScreenCheckBox = const Key('__detailScreenCheckBox__');
 }
