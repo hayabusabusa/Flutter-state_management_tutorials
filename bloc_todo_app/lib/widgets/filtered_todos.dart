@@ -42,7 +42,51 @@ class FilteredTodos extends StatelessWidget {
             itemBuilder: (BuildContext context, int index) {
               final todo = todos[index];
 
-              // TODO: Impl TodoItem Widget
+              return TodoItem(
+                todo: todo,
+                // スワイプで削除
+                onDismissed: (direction) {
+                  todosBloc.dispatch(DeleteTodo(todo));
+
+                  Scaffold.of(context).showSnackBar(
+                    DeleteTodoSnackBar(
+                      key: ArchSampleKeys.snackbar,
+                      todo: todo,
+                      onUndo: () => todosBloc.dispatch(AddTodos(todo)),
+                      localizations: localizations,
+                    )
+                  );
+                },
+
+                // セルをタップした時
+                onTap: () async {
+                  final removedTodo = await Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) {
+                        return DetailsScreen(id: todo.id,);
+                      }
+                    )
+                  );
+
+                  if (removedTodo != null) {
+                    Scaffold.of(context).showSnackBar(
+                      DeleteTodoSnackBar(
+                        key: ArchSampleKeys.snackbar,
+                        todo: todo,
+                        onUndo: () => todosBloc.dispatch(AddTodos(todo)),
+                        localizations: localizations,
+                      )
+                    );
+                  }
+                },
+
+                // チェックボックスの状態が変わった時
+                onCheckBoxChanged: (_) {
+                  todosBloc.dispatch(
+                    UpdateTodo(todo.copyWith(complete: !todo.complete))
+                  );
+                },
+              );
             },
           );
         // それ以外

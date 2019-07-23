@@ -11,10 +11,10 @@ import 'package:bloc_todo_app/flutter_todos_keys.dart';
 /// Todoの詳細画面。
 /// ユーザーが選択したTodoの詳細が表示されて、
 /// ユーザーはTodoを編集、削除することができる。
-class DetaiScreen extends StatelessWidget {
+class DetailsScreen extends StatelessWidget {
   final String id;
 
-  DetaiScreen({
+  DetailsScreen({
     Key key,
     @required this.id
   }) : super(key: key ?? ArchSampleKeys.todoDetailsScreen);
