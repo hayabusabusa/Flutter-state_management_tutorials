@@ -117,7 +117,16 @@ class DetailsScreen extends StatelessWidget {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (BuildContext context) {
-                      // TODO: Impletemt editTodoScreen
+                      return AddEditScreen(
+                        key: ArchSampleKeys.editTodoScreen,
+                        isEditing: true,
+                        todo: todo,
+                        onSave: (task, note) {
+                          todosBloc.dispatch(
+                            UpdateTodo(todo.copyWith(task: task, note: note))
+                          );
+                        },
+                      );
                     }
                   )
                 );

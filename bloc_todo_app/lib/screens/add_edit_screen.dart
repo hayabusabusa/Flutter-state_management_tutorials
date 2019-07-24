@@ -60,7 +60,7 @@ class _AddEditScreenState extends State<AddEditScreen> {
             children: <Widget>[
               // Task名入力
               TextFormField(
-                initialValue: isEditing ? widget.todo : '',
+                initialValue: isEditing ? widget.todo.task : '',
                 key: ArchSampleKeys.taskField,
                 autofocus: !isEditing, // ??
                 style: textTheme.headline,
@@ -77,7 +77,7 @@ class _AddEditScreenState extends State<AddEditScreen> {
 
               // Taskメモ入力
               TextFormField(
-                initialValue: isEditing ? widget.todo : '',
+                initialValue: isEditing ? widget.todo.note : '',
                 key: ArchSampleKeys.noteField,
                 maxLines: 10,
                 style: textTheme.subhead,

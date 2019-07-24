@@ -14,9 +14,12 @@ class Stats extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final statsBloc = BlocProvider.of<StatsBloc>(context);
 
     // BlocProviderで取り出しはなし
-    return BlocBuilder<StatsBloc, StatsState>(
+    // bloc != null でエラーになったのでBlocProviderで取り出し
+    return BlocBuilder(
+      bloc: statsBloc,
       builder: (context, state) {
 
         // ロード中

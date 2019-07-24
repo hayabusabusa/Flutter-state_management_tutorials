@@ -32,10 +32,9 @@ class HomeScreen extends StatelessWidget {
             ],
           ),
           // Body
-          // TODO: Impl FilteredTodos() and Stats()
           // アクティブになっているタブに応じて
           // それに対応した画面を表示させる
-          //body: activeTab == AppTab.todos ? ,
+          body: activeTab == AppTab.todos ? FilteredTodos() : Stats(),//_mapAppTabToWidget(activeTab),
           // Floating Action Button
           floatingActionButton: FloatingActionButton(
             key: ArchSampleKeys.addTodoFab,
@@ -54,5 +53,18 @@ class HomeScreen extends StatelessWidget {
         );
       },
     );
+  }
+
+  Widget _mapAppTabToWidget(AppTab appTab) {
+    switch (appTab) {
+      case AppTab.todos:
+        return FilteredTodos();
+      case AppTab.stats:
+        return Stats();
+      default:
+        return Center(
+          child: Text('Unknown AppTab pattern'),
+        );
+    }
   }
 }
